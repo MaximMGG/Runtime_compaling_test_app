@@ -8,6 +8,7 @@
 typedef struct {
     char **list;
     int list_len;
+    int max_len;
 } run_list;
 
 typedef enum{
@@ -25,5 +26,11 @@ int list_error_func(list_error error);
 int list_remove(run_list *list, int pos);
 
 //list func end----------------
+
+//string func begin -----------
+
+char **str_split(char *, char, int *len);
+
+//string func end -------------
 
 #endif //_RUN_UTIL_H_

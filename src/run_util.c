@@ -8,6 +8,7 @@ run_list *list_create() {
     list->list = (char **) malloc(sizeof(char *) * DEF_LIST_SIZE);
     if (list->list == NULL) list_error_func(CREATE_LIST_ERROR);
     list->list_len = 0;
+    list->max_len = DEF_LIST_SIZE;
 
     return list;
 }
@@ -22,7 +23,10 @@ int list_add(run_list *list, char *line) {
         return -1;
     }
     list->list_len++;
-
+    if (list->list_len >= list->max_len) {
+        list->max_len <<= 1;
+        list->list = (char **) realloc(list->list, sizeof(char *) * list->max_len);
+    }
     return 0;
 }
 
@@ -53,8 +57,7 @@ int list_remove(run_list *list, int pos) {
     for(int i = pos; i < list->list_len - 1; i++) {
         list->list[i] = list->list[i + 1];
     }
-
-
+    return 0;
 }
 
 int list_error_func(list_error error) {
@@ -71,3 +74,39 @@ int list_error_func(list_error error) {
     }
     return 0;
 }
+
+
+//string func begin -----------
+
+static int *str_split_realloc(char **ret, int *len) {
+    *len <<= 1;
+    ret = (char **) realloc(ret, sizeof(char *) * *len);
+    return len;
+}
+
+char **str_split(char *buf, char symbol, int *size) {
+    int split_len = 10;
+    int count = 0;
+    char **ret = (char **) malloc(sizeof(char *) * split_len);
+    char temp[128];
+    char *t_p = temp;
+    char *b_p = buf;
+    int len = strlen(buf);
+
+    for(int i = 0; i < len; i++) {
+        *(t_p++) = *(b_p++);
+        if(*b_p == symbol || *b_p == '\0' || *b_p == '\n') {
+            b_p++;
+            *t_p = '\0';
+            ret[count] = malloc(strlen(temp));
+            strcpy(ret[count], temp);
+            if (count == split_len) 
+                str_split_realloc(ret, &split_len);
+
+            t_p = temp;
+        }
+    }
+    return ret;
+}
+
+//string func end -------------
