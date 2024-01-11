@@ -25,6 +25,8 @@ static int setup_warning(C_setup *setup) {
         c--;
         if (c >= Werror_len || c < 0) {
             printf("Do not have option with this nomber - %d\n", c + 1);
+            free(setup->warnings->warn);
+            free(setup->warnings);
             return -1;
         }
         setup->warnings->warn[setup->warnings->len] = (char *) malloc(sizeof(Werror[i]));
@@ -35,12 +37,15 @@ static int setup_warning(C_setup *setup) {
 }
 
 
-
+//TODO write this func for libs, sanitaze
 C_setup *profile_create() {
+    int err = 0;
     C_setup *setup = (C_setup *) malloc(sizeof(C_setup));
-
-
-
+    err = setup_warning(setup);
+    if (err < 0) {
+        free(setup);
+        profile_create();
+    }
 
     return setup;
 }

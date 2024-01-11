@@ -29,7 +29,7 @@ int list_remove(run_list *list, int pos);
 
 //string func begin -----------
 
-char **str_split(char *, char, int *len);
+char **str_split(char *, char, int *size);
 
 //string func end -------------
 
