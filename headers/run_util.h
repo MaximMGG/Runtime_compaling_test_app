@@ -1,6 +1,8 @@
 #ifndef _RUN_UTIL_H_
 #define _RUN_UTIL_H_
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 //list func begin--------------
 typedef struct {
@@ -14,11 +16,13 @@ typedef enum{
 
 run_list *list_create();
 
-int list_add(char *);
+int list_add(run_list *list, char *);
 
-char *list_get(int pos);
+char *list_get(run_list *list, int pos);
 
 int list_error_func(list_error error);
+
+int list_remove(run_list *list, int pos);
 
 //list func end----------------
 
