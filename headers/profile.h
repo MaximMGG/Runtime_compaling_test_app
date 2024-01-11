@@ -2,8 +2,6 @@
 #define _PROFILE_H_
 #include "compile.h"
 
-
-
 //create new profile return C_setup *
 C_setup *profile_create();
 
