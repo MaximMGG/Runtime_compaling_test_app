@@ -30,11 +30,11 @@ typedef struct {
 } libs;
 
 struct cur_project {
-    files **files;
-    libs **libs;
-    warnings **warnings; //default -Wall -Werror
+    files *files;
+    libs *libs;
+    warnings *warnings; //default -Wall -Werror
     bool debug;  //default nothing
-    sanitaze **sanityzer;  //default nothing
+    sanitaze *sanityzer;  //default nothing
     std_compiler_v version; // default -std=c17
     char *execut_line;
 };

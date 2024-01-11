@@ -1,6 +1,9 @@
 #ifndef _PROFILE_H_
 #define _PROFILE_H_
 #include "compile.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "run_util.h"
 
 //create new profile return C_setup *
 C_setup *profile_create();

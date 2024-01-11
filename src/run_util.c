@@ -94,6 +94,10 @@ char **str_split(char *buf, char symbol, int *size) {
     int len = strlen(buf);
 
     for(int i = 0; i < len; i++) {
+        if (*b_p == ' ') {
+            b_p++;
+            continue;
+        }
         *(t_p++) = *(b_p++);
         if(*b_p == symbol || *b_p == '\0' || *b_p == '\n') {
             b_p++;
