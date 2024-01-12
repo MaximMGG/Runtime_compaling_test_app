@@ -10,11 +10,16 @@ C_setup *init_compiler(int argc, char **args) {
         fprintf(stderr, "You din't enter any option\n Write option [help] for more information");
     }
     if (strcmp(args[1], "-pc") == 0) {
+        puts("Ok, lets create profile");
         setup = profile_create();
     }
     if (strcmp(args[1], "-p") == 0) {
         setup = profile_load(args[2]);
     } 
+    if (strcmp(args[1], "-e")) {
+        setup->execut_line = (char *) malloc(strlen(args[2]));
+        strcpy(setup->execut_line, args[2]);
+    }
     return setup;
 }
 

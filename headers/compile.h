@@ -43,6 +43,7 @@ typedef struct cur_project C_setup;
 
 //init struct cur_project and set all flags
 C_setup *init_compiler(int argc, char **args);
+//compile setup->execut_line and run app
 int compile(C_setup *setup);
 
 //cancation all option to one line 

@@ -77,4 +77,20 @@ int d_save_profile(run_list *list, char *pr_name) {
         fputs(list_get(list, i), f);
     }
     fclose(f);
+    return 0;
+}
+
+run_list *d_load_profile(char *pr_name) {
+    run_list *list = list_create();
+    FILE *f = fopen(path_to_conf, "r");
+
+
+    char *buf = (char *) malloc(sizeof(char) * 64);
+    while(!feof(f)) {
+       fgets(buf, 64, f); 
+       list_add(list, str_remove_all(buf, '\n'));
+    }
+    fclose(f);
+
+    return list;
 }

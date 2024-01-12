@@ -21,6 +21,9 @@ int d_add_profile_to_conf(char *pr_name);
 //save profile in runcomp_c dir, create new file with settings
 int d_save_profile(run_list *list, char *pr_name);
 
+//load profile from dirrectory
+run_list *d_load_profile(char *pr_name);
+
 
 #endif //_DISK_WORK_H_
 

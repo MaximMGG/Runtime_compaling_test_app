@@ -216,10 +216,38 @@ void profile_free(C_setup *setup) {
 
 //profile create =============================================================
 
+static C_setup *map_setup_from_list(run_list *list) {
+    C_setup *setup = (C_setup *) malloc(sizeof(C_setup));
+    
+    char *temp;
+
+    for(int i = 0; i < list->list_len; i++) {
+
+
+    }
+
+    return setup;
+}
+
+
+
 C_setup *profile_load(char *profile_name) {
     C_setup *setup;
+    run_list *list = d_get_profiles();
+    run_list *pr_setup = NULL;
 
+    for(int i = 0; i < list->list_len; i++) {
+        if (strcmp(profile_name, list_get(list, i)) == 0) {
+            pr_setup = d_load_profile(profile_name);
+            setup = map_setup_from_list(list);
 
+        }
+    }
+
+    if (pr_setup == NULL) {
+        fprintf(stderr, "Does not have profile with that name: %s\n", profile_name);
+        return NULL;
+    }
 
     return setup;
 }
