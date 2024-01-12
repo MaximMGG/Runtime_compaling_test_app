@@ -14,10 +14,15 @@ C_setup *init_compiler(int argc, char **args) {
         setup = profile_create();
     } else if (strcmp(args[1], "-p") == 0) {
         setup = profile_load(args[2]);
-    } else if (strcmp(args[1], "-e")) {
+    } else if (strcmp(args[1], "-e") == 0) {
         setup = (C_setup *) malloc(sizeof(C_setup));
-        setup->execut_line = (char *) malloc(strlen(args[2]));
-        strcpy(setup->execut_line, args[2]);
+        if (args[2] != NULL) {
+            setup->execut_line = (char *) malloc(strlen(args[2]));
+            strcpy(setup->execut_line, args[2]);
+        } else {
+            fprintf(stderr, "Can't find executable info in arguments, try age : f.e. -e gcc test.c -g");
+            return NULL;
+        }
     } else {
         fprintf(stderr, "Unnown flag, pleare write [help] for more information");
         return NULL;
