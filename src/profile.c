@@ -17,7 +17,8 @@ static const char Fsanitize[][64] = {
                                     "-fsanitize=pointer-compare"
                                     };
 
-
+#define Comp_version_len 5
+static const char Comp_version[][16] = {"-std=99", "-std=11", "-std=17", "-std=20", "-std=23"};
 
 static void print_Werror() {
     puts("Suppresss Warnings: enter f.e. 1, 2, 5 or 1, 2 or 2");
@@ -117,7 +118,27 @@ static int setup_sanitize(C_setup *setup) {
 }
 
 
-//TODO write this func for libs, sanitaze
+static void print_comp_v() {
+    puts("Compiler versions: enter onely one option");
+    for(int i = 0; i < Comp_version_len; i++) {
+        printf("%d -> %s\n", i + 1, Comp_version[i]);
+    }
+}
+
+static void setup_c_version(C_setup *setup) {
+    print_comp_v();
+    int version;
+    scanf("%d", &version);
+    if (version > Comp_version_len || version < 1) {
+        printf("Don't have option with this number %d try agane", version);
+        setup_c_version(setup);
+        return;
+    }
+    setup->version = (char *) malloc(strlen(Comp_version[version - 1]));
+    strcpy(setup->version, Comp_version[version - 1]);
+}
+
+
 C_setup *profile_create() {
     int err = 0;
     C_setup *setup = (C_setup *) malloc(sizeof(C_setup));
@@ -130,6 +151,7 @@ C_setup *profile_create() {
     err = setup_warning(setup);
     setup_libs(setup);
     err = setup_sanitize(setup);
+    setup_c_version(setup);
 
     return setup;
 }

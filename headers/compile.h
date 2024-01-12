@@ -5,10 +5,6 @@
 //https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html  -- more info here
 //TODO continue to write all flags
 
-typedef enum {
-    STD_99, STD_11, STD_17, STD_23
-}std_compiler_v;
-
 
 typedef struct {
     char **warn;
@@ -30,13 +26,14 @@ typedef struct {
     int len;
 } sanitize;
 
+
 struct cur_project {
     files *files;
     libs *libs;
     warnings *warnings; //default -Wall -Werror
     bool debug;  //default nothing
     sanitize *sanitizer;  //default nothing
-    std_compiler_v version; // default -std=c17
+    char *version; // default -std=c17
     char *execut_line;
 };
 
