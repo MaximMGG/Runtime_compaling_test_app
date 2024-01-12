@@ -234,33 +234,67 @@ static C_setup *map_setup_from_list(run_list *list) {
     
     char *temp;
     run_list *buf_l = list_create();
-    char **struc;
-    int *size;
 
     for(int i = 0; i < list->list_len; i++) {
         if (strcmp(list_get(list, i), "libs:") == 0) {
-            setup->libs = (libs *) malloc(sizeof(libs));
-            struc = setup->libs->lib;
-            *size = setup->libs->len;
+            i += 2;
+            while(strcmp((temp = list_get(list, i)), ">") != 0) {
+                list_add(buf_l, temp);
+            }
+            if (buf_l->list_len != 0) {
+                setup->libs = (libs *) malloc(sizeof(libs));
+                map_list_helper(buf_l, setup->libs->lib);
+            } else {
+                free(setup->libs);
+                setup->libs = NULL;
+            }
+            list_clear(buf_l);
         } else if (strcmp(list_get(list, i), "warnings:") == 0) {
+            i += 2;
+            while(strcmp((temp = list_get(list, i)), ">") != 0) {
+                list_add(buf_l, temp);
+            }
+            if (buf_l->list_len != 0) {
+                setup->warnings = (warnings *) malloc(sizeof(warnings));
+                map_list_helper(buf_l, setup->warnings->warn);
+            } else {
+                free(setup->warnings);
+                setup->warnings = NULL;
+            }
+            list_clear(buf_l);
 
         } else if (strcmp(list_get(list, i), "sanitize:") == 0) {
+            i += 2;
+            while(strcmp((temp = list_get(list, i)), ">") != 0) {
+                list_add(buf_l, temp);
+            }
+            if (buf_l->list_len != 0) {
+                setup->sanitizer = (sanitize *) malloc(sizeof(sanitize));
+                map_list_helper(buf_l, setup->sanitizer->san);
+            } else {
+                free(setup->sanitizer);
+                setup->sanitizer = NULL;
+            }
+            list_clear(buf_l);
 
         } else if (strcmp(list_get(list, i), "version:") == 0) {
+            i += 2;
+            temp = list_get(buf_l, i);
+            if (strcmp(temp, ">") != 0) {
+                setup->version = (char *) malloc(sizeof(char) * strlen(temp));
+                strcpy(setup->version, temp);
+            }
+            list_clear(buf_l);
 
         } else if (strcmp(list_get(list, i), "debug:") == 0) {
-
+            i += 2;
+            temp = list_get(buf_l, i);
+            if (strcmp(temp, ">") != 0) {
+                setup->debug = 1;
+            } else {
+                setup->debug = 0;
+            }
         }
-        while(strcmp((temp = list_get(list, i)), ">") != 0) {
-            list_add(buf_l, temp);
-        }
-        if (buf_l->list_len != 0) {
-            setup->libs = (libs *) malloc(sizeof(libs));
-            map_list_helper(buf_l, setup->libs->lib);
-        } else {
-            setup->libs = NULL;
-        }
-
     }
 
     list_destroy(list);
