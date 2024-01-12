@@ -138,6 +138,18 @@ static void setup_c_version(C_setup *setup) {
     strcpy(setup->version, Comp_version[version - 1]);
 }
 
+static void setup_debug(C_setup *setup) {
+    puts("Enter 1 if you need to include (-g) debug option, or 0");
+    int debug;
+    scanf("%d", &debug);
+    if (debug > 1 || debug < 0) {
+        printf("Incorrect option %d try agane\n", debug);
+        setup_debug(setup);
+        return;
+    }
+    setup->debug = debug;
+}
+
 
 C_setup *profile_create() {
     int err = 0;
@@ -152,10 +164,11 @@ C_setup *profile_create() {
     setup_libs(setup);
     err = setup_sanitize(setup);
     setup_c_version(setup);
+    setup_debug(setup);
+    
 
     return setup;
 }
-
 
 
 void profile_free(C_setup *setup) {
