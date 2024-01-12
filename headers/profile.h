@@ -18,4 +18,9 @@ int profile_save(C_setup *setup, char *profile_name);
 C_setup *profile_change(C_setup *setup);
 
 
+
+//frees all memory in setup struct
+void profile_free(C_setup *setup);
+
+
 #endif //_PROFILE_H_
