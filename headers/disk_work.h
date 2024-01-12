@@ -13,8 +13,13 @@
 int setup_dir_and_conf();
 
 //return list of all profiles
-run_list *get_profiles();
+run_list *d_get_profiles();
 
+//add profile in profile.conf file
+int d_add_profile_to_conf(char *pr_name);
+
+//save profile in runcomp_c dir, create new file with settings
+int d_save_profile(run_list *list, char *pr_name);
 
 
 #endif //_DISK_WORK_H_

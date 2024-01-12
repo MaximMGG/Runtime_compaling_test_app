@@ -3,6 +3,7 @@
 
 #define DIR_PATH "/home/%s/.local/share/runtime_c"
 #define CONF_PATH "/profile.conf"
+
 static char path_to_dir[128];
 static char path_to_conf[168];
 
@@ -45,20 +46,35 @@ run_list *get_profiles() {
     return list;
 }
 
-char *str_remove_all(char *target, char symbol) {
-    int size = strlen(target);
-    char *res = (char *) malloc(size);
-    char *t_p = target;
-    char *r_p = res;
+int d_add_profile_to_conf(char *pr_name) {
+    FILE *f = fopen(path_to_conf, "a");
 
-    for(int i = 0; i < size; i++) {
-        if (*t_p != symbol) {
-            *(r_p++) = *t_p;
-        }
-        t_p++;
+    if (f == NULL) {
+        fprintf(stderr, "Can't open file %s\n", path_to_conf);
+        return -1;
     }
-    *r_p = '\0';
-    strcpy(target, res);
-    free(res);
-    return target;
+
+    if(fputs(pr_name, f)) {
+        fclose(f);
+        return 0;
+    }
+    fclose(f);
+    return -1;
+}
+
+
+int d_save_profile(run_list *list, char *pr_name) {
+    char buf[164];    
+    strcpy(buf, path_to_dir);
+    strcat(buf, "/");
+    strcat(buf, pr_name);
+    FILE *f = fopen(buf, "w");
+
+    if(f == NULL) {
+        fprintf(stderr, "Path %s does not exist\n", buf);
+    }
+    for(int i = 0; i < list->list_len; i++) {
+        fputs(list_get(list, i), f);
+    }
+    fclose(f);
 }

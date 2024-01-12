@@ -41,7 +41,7 @@ char *list_get(run_list *list, int pos) {
 int list_remove(run_list *list, int pos) {
     if (pos >= list->list_len) {
         list_error_func(OUT_OF_BOUD);
-        return NULL;
+        return -1;
     }
 
     if (pos == list->list_len - 1) {
@@ -111,6 +111,24 @@ char **str_split(char *buf, char symbol, int *size) {
         }
     }
     return ret;
+}
+
+char *str_remove_all(char *target, char symbol) {
+    int size = strlen(target);
+    char *res = (char *) malloc(size);
+    char *t_p = target;
+    char *r_p = res;
+
+    for(int i = 0; i < size; i++) {
+        if (*t_p != symbol) {
+            *(r_p++) = *t_p;
+        }
+        t_p++;
+    }
+    *r_p = '\0';
+    strcpy(target, res);
+    free(res);
+    return target;
 }
 
 //string func end -------------
