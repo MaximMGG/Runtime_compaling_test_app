@@ -46,7 +46,7 @@ C_setup *init_compiler(int argc, char **args);
 int compile(C_setup *setup);
 
 //cancation all option to one line 
-char *prepare_execution_line(C_setup *setup);
+void prepare_execution_line(C_setup *setup);
 
 
 #endif //_COMPILE_H_
