@@ -216,16 +216,54 @@ void profile_free(C_setup *setup) {
 
 //profile create =============================================================
 
+static void map_list_helper(run_list *buf, char **target) {
+    target = (char **) malloc(sizeof(char *) * buf->list_len);
+
+    char *s;
+    for(int i = 0; i < buf->list_len; i++) {
+        s = list_get(buf, i);
+        int size = strlen(s);
+        target[i] = (char *) malloc(size);
+        strcpy(target[i], s);
+    }
+}
+
+
 static C_setup *map_setup_from_list(run_list *list) {
     C_setup *setup = (C_setup *) malloc(sizeof(C_setup));
     
     char *temp;
+    run_list *buf_l = list_create();
+    char **struc;
+    int *size;
 
     for(int i = 0; i < list->list_len; i++) {
+        if (strcmp(list_get(list, i), "libs:") == 0) {
+            setup->libs = (libs *) malloc(sizeof(libs));
+            struc = setup->libs->lib;
+            *size = setup->libs->len;
+        } else if (strcmp(list_get(list, i), "warnings:") == 0) {
 
+        } else if (strcmp(list_get(list, i), "sanitize:") == 0) {
+
+        } else if (strcmp(list_get(list, i), "version:") == 0) {
+
+        } else if (strcmp(list_get(list, i), "debug:") == 0) {
+
+        }
+        while(strcmp((temp = list_get(list, i)), ">") != 0) {
+            list_add(buf_l, temp);
+        }
+        if (buf_l->list_len != 0) {
+            setup->libs = (libs *) malloc(sizeof(libs));
+            map_list_helper(buf_l, setup->libs->lib);
+        } else {
+            setup->libs = NULL;
+        }
 
     }
 
+    list_destroy(list);
     return setup;
 }
 

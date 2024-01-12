@@ -75,6 +75,19 @@ int list_error_func(list_error error) {
     return 0;
 }
 
+void list_destroy(run_list *list) {
+    for(int i = 0; i < list->list_len; i++) {
+        free(list->list[i]);
+    }
+    free(list->list);
+    free(list);
+    list = NULL;
+}
+
+run_list *list_clear(run_list *list) {
+    list_destroy(list);
+    return list_create();
+}
 
 //string func begin -----------
 
