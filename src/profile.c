@@ -380,3 +380,6 @@ int profile_save(C_setup *setup, char *profile_name) {
 
     return 0;
 }
+
+//TODO need to write this functional
+C_setup *profile_change(C_setup *setup) {return NULL;}

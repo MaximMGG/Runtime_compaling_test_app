@@ -3,7 +3,13 @@
 
 
 int main(int argc, char **args) {
-    init_compiler(argc, args);
+    C_setup *setup = init_compiler(argc, args);
+    int enter;
+
+    while((enter = getchar()) != 'q') {
+        compile(setup);
+        system("./a.out");
+    }
 
     return 0;
 }

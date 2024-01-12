@@ -28,7 +28,7 @@ int setup_dir_and_conf() {
 }
 
 
-run_list *get_profiles() {
+run_list *d_get_profiles() {
     FILE *f = fopen(path_to_conf, "r");
     
     if (f == NULL) {

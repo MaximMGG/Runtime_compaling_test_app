@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 //https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html  -- more info here
 //TODO continue to write all flags
 

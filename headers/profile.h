@@ -15,7 +15,7 @@ C_setup *profile_load(char *profile_name);
 //save profile in dirrectory ./local/share/runtime_c/profile_name.conf
 int profile_save(C_setup *setup, char *profile_name);
 
-//change profile setting
+//change profile setting TODO write this
 C_setup *profile_change(C_setup *setup);
 
 //sets files in files struct
