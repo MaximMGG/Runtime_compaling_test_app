@@ -20,6 +20,9 @@ static const char Fsanitize[][64] = {
 #define Comp_version_len 5
 static const char Comp_version[][16] = {"-std=99", "-std=11", "-std=17", "-std=20", "-std=23"};
 
+
+//profile create =============================================================
+
 static void print_Werror() {
     puts("Suppresss Warnings: enter f.e. 1, 2, 5 or 1, 2 or 2");
     for(int i = 0; i < Werror_len; i++) {
@@ -208,5 +211,16 @@ void profile_free(C_setup *setup) {
         setup->libs = NULL;
     }
     free(setup);
+}
+
+
+//profile create =============================================================
+
+C_setup *profile_load(char *profile_name) {
+    C_setup *setup;
+
+
+
+    return setup;
 }
 

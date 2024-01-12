@@ -31,6 +31,9 @@ int list_remove(run_list *list, int pos);
 
 char **str_split(char *, char, int *size);
 
+//removing all symbols in char
+char *str_remove_all(char *target, char symbol);
+
 //string func end -------------
 
 #endif //_RUN_UTIL_H_

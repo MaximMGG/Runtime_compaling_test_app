@@ -18,7 +18,10 @@ C_setup *init_compiler(int argc, char **args) {
     return setup;
 }
 
-int compile(C_setup *setup);
+int compile(C_setup *setup) {
+    if (system(setup->execut_line)) return 0;
+    return -1;
+}
 
 
 static void insert_strings_in_ex_line(char **list, int size, char *line) {
@@ -43,6 +46,4 @@ void prepare_execution_line(C_setup *setup) {
     int size = strlen(e_line);
     setup->execut_line = (char *) malloc(size);
     strcpy(setup->execut_line, e_line);
-
-
 }
