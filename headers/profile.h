@@ -18,7 +18,8 @@ int profile_save(C_setup *setup, char *profile_name);
 //change profile setting
 C_setup *profile_change(C_setup *setup);
 
-
+//sets files in files struct
+int profile_set_files(C_setup *setup, char *files);
 
 //frees all memory in setup struct
 void profile_free(C_setup *setup);

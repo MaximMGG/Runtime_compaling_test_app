@@ -173,6 +173,7 @@ C_setup *profile_create() {
     return setup;
 }
 
+//profile create =============================================================
 
 void profile_free(C_setup *setup) {
     if (setup->execut_line != NULL) {
@@ -213,8 +214,6 @@ void profile_free(C_setup *setup) {
     free(setup);
 }
 
-
-//profile create =============================================================
 
 static void map_list_helper(run_list *buf, char **target) {
     target = (char **) malloc(sizeof(char *) * buf->list_len);
@@ -324,3 +323,60 @@ C_setup *profile_load(char *profile_name) {
     return setup;
 }
 
+int profile_set_files(C_setup *setup, char *file_buf) {
+    int size;
+    char **file_l = str_split(file_buf, ',', &size);
+    if (size == 0) {
+        fprintf(stderr, "Can't find any file");
+        return -1;
+    }
+    setup->files = (files *) malloc(sizeof(files));
+    setup->files->file = file_l;
+    setup->files->len = size;
+    return 0;
+}
+
+
+static void profile_save_helper(run_list *list, char **lib, int size, char *lib_name) {
+    list_add(list, lib_name);
+    list_add(list, "<");
+    for(int i = 0; i < size; i++) {
+        list_add(list, lib[i]);
+    }
+    list_add(list, ">");
+}
+
+
+
+int profile_save(C_setup *setup, char *profile_name) {
+    run_list *list = list_create();
+    
+    if (setup->libs->lib == NULL)
+        profile_save_helper(list, NULL, 0, "libs:");
+    else
+        profile_save_helper(list, setup->libs->lib, setup->libs->len, "libs:");
+
+    if (setup->warnings == NULL)
+        profile_save_helper(list, NULL, 0, "warnings:");
+    else
+        profile_save_helper(list, setup->warnings->warn, setup->warnings->len, "warnings:");
+
+    if (setup->sanitizer == NULL)
+        profile_save_helper(list, NULL, 0, "sanitize:");
+    else
+        profile_save_helper(list, setup->sanitizer->san, setup->sanitizer->len, "sanitize:");
+    if (setup->version == NULL) 
+        profile_save_helper(list, NULL, 0, "version:");
+    else 
+        profile_save_helper(list, &setup->version, 1, "version"); 
+    if (setup->debug == 0)
+        profile_save_helper(list, NULL, 0, "debug:");
+    else  {
+        char *deb = "-g";
+        profile_save_helper(list, &deb, 1, "debug");
+    }
+
+    d_save_profile(list, profile_name);
+
+    return 0;
+}

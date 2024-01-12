@@ -74,7 +74,8 @@ int d_save_profile(run_list *list, char *pr_name) {
         fprintf(stderr, "Path %s does not exist\n", buf);
     }
     for(int i = 0; i < list->list_len; i++) {
-        fputs(list_get(list, i), f);
+        // fputs(list_get(list, i), f);
+        fprintf(f, "%s\n", list_get(list, i));
     }
     fclose(f);
     return 0;

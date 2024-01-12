@@ -7,6 +7,10 @@
 //https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html  -- more info here
 //TODO continue to write all flags
 
+typedef struct {
+    char **lib;
+    int len;
+} libs;
 
 typedef struct {
     char **warn;
@@ -14,28 +18,22 @@ typedef struct {
 } warnings;
 
 typedef struct {
-    char **file;
-    int len;
-}files;
-
-typedef struct {
-    char **lib;
-    int len;
-} libs;
-
-typedef struct {
     char **san;
     int len;
 } sanitize;
 
+typedef struct {
+    char **file;
+    int len;
+}files;
 
 struct cur_project {
-    files *files;
     libs *libs;
     warnings *warnings; //default -Wall -Werror
-    bool debug;  //default nothing
     sanitize *sanitizer;  //default nothing
     char *version; // default -std=c17
+    bool debug;  //default nothing
+    files *files;
     char *execut_line;
 };
 
