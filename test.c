@@ -4,6 +4,8 @@
 
 int main() {
 
+    Curl *curl;
+
 
     printf("Hello\n");
 

@@ -2,12 +2,29 @@
 #include "../headers/profile.h"
 
 
-#define OUTPUT_LINE " > temp"
-
 
 
 //TODO for future here will be write fucntional for building enrire all project,
 //for now anly runtime compiling files thet user enter
+//
+
+
+//TODO need to finish this function
+static int profile_option(C_setup *setup) {
+    puts("Enter: 1. For saving profile.\n2. For add files.\n3. For execute entire dirrectory");
+    int answer;
+    scanf("%d", &answer);
+    if (answer == 1)  {
+        puts("Enter name of profile");
+        char profile_name[64];
+        fgets(profile_name, 64, stdin);
+        profile_save(setup, profile_name);
+    }
+
+    return 0;
+}
+
+
 C_setup *init_compiler(int argc, char **args) {
     C_setup *setup;
     if (argc <= 1) {
@@ -16,6 +33,7 @@ C_setup *init_compiler(int argc, char **args) {
     if (strcmp(args[1], "-pc") == 0) {
         puts("Ok, lets create profile");
         setup = profile_create();
+
     } else if (strcmp(args[1], "-p") == 0) {
         setup = profile_load(args[2]);
     } else if (strcmp(args[1], "-e") == 0) {
@@ -23,7 +41,6 @@ C_setup *init_compiler(int argc, char **args) {
         if (args[2] != NULL) {
             setup->execut_line = (char *) malloc(strlen(args[2]));
             strcpy(setup->execut_line, args[2]);
-            str_append(setup->execut_line, OUTPUT_LINE);
         } else {
             fprintf(stderr, "Can't find executable info in arguments, try age : f.e. -e gcc test.c -g");
             return NULL;
@@ -36,7 +53,9 @@ C_setup *init_compiler(int argc, char **args) {
     return setup;
 }
 
+
 int compile(C_setup *setup) {
+    int check = 0;
     if (system(setup->execut_line)) return 0;
 
 
