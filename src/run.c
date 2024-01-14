@@ -6,6 +6,10 @@ bool run = 1;
 
 int main(int argc, char **args) {
     C_setup *setup = init_compiler(argc, args);
+    if (setup == NULL) {
+        fprintf(stderr, "Init Compiling arror");
+        exit(1);
+    }
     int enter;
 
     while(run) {
