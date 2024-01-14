@@ -168,7 +168,6 @@ C_setup *profile_create() {
     err = setup_sanitize(setup);
     setup_c_version(setup);
     setup_debug(setup);
-    
 
     return setup;
 }

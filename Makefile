@@ -1,4 +1,4 @@
-MAIN = a.out
+MAIN = run
 
 
 SRC = $(wildcard src/*.c)

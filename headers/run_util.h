@@ -40,6 +40,10 @@ char **str_split(char *, char, int *size);
 // removing all symbols in char
 char *str_remove_all(char *target, char symbol);
 
+//appent to end of string sourse part (need the sourse be allocated string)
+char *str_append(char *sourse, char *part);
+    
+
 // string func end -------------
 
 #endif //_RUN_UTIL_H_

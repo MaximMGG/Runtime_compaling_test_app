@@ -2,6 +2,10 @@
 #include "../headers/profile.h"
 
 
+#define OUTPUT_LINE " > temp"
+
+
+
 //TODO for future here will be write fucntional for building enrire all project,
 //for now anly runtime compiling files thet user enter
 C_setup *init_compiler(int argc, char **args) {
@@ -19,10 +23,12 @@ C_setup *init_compiler(int argc, char **args) {
         if (args[2] != NULL) {
             setup->execut_line = (char *) malloc(strlen(args[2]));
             strcpy(setup->execut_line, args[2]);
+            str_append(setup->execut_line, OUTPUT_LINE);
         } else {
             fprintf(stderr, "Can't find executable info in arguments, try age : f.e. -e gcc test.c -g");
             return NULL;
         }
+        compile(setup);
     } else {
         fprintf(stderr, "Unnown flag, pleare write [help] for more information");
         return NULL;
@@ -32,6 +38,9 @@ C_setup *init_compiler(int argc, char **args) {
 
 int compile(C_setup *setup) {
     if (system(setup->execut_line)) return 0;
+
+
+
     return -1;
 }
 

@@ -144,4 +144,17 @@ char *str_remove_all(char *target, char symbol) {
     return target;
 }
 
+
+char *str_append(char *sourse, char *part) {
+    int part_len = strlen(part);
+    int sourse_len = strlen(sourse);
+    sourse = (char *) realloc(sourse, sizeof(char) * (part_len + sourse_len) - 1);
+
+    for (int i = 0; i < sourse_len; i++) {
+        sourse[sourse_len++ - 1] = part[i];
+    }
+    sourse[sourse_len] = '\0';
+
+    return sourse;
+}
 //string func end -------------
