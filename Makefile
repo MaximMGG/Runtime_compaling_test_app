@@ -1,6 +1,5 @@
 MAIN = run
 
-
 SRC = $(wildcard src/*.c)
 
 all = comp

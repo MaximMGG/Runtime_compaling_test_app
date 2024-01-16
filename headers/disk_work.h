@@ -24,6 +24,13 @@ int d_save_profile(run_list *list, char *pr_name);
 //load profile from dirrectory
 run_list *d_load_profile(char *pr_name);
 
+//return list whith content of dir_name
+run_list *d_read_dir(char *dir_name);
+
+//return list contein file with *.c type in all dirrectories started from
+//current
+run_list *scan_dir_tree();
+
 
 #endif //_DISK_WORK_H_
 

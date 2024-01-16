@@ -1,4 +1,5 @@
 #include "../headers/disk_work.h"
+#include <stdbool.h>
 
 
 #define DIR_PATH "/home/%s/.local/share/runtime_c"
@@ -94,4 +95,64 @@ run_list *d_load_profile(char *pr_name) {
     fclose(f);
 
     return list;
+}
+
+run_list *d_read_dir(char *dir_name) {
+    run_list *list = list_create();
+
+    DIR *dir = opendir(dir_name);
+    if (dir == NULL) {
+        fprintf(stderr, "Can't read dirrectory %s\n", dir_name);
+        return NULL;
+    }
+
+    struct dirent *dirr;
+    while((dirr = readdir(dir)) != NULL) {
+        list_add(list, dirr->d_name);
+    }
+
+    return list;
+}
+
+static bool file_is_c(char *file) {
+    int len = strlen(file);
+    if ((*file + (len - 2)) == '.' && (*file + (len - 1)) == 'c') {
+        return true;
+    }
+    return false;
+}
+
+static bool file_is_dir(char *file) {
+    if (strcmp(file, "..") == 0 || strcmp(file, ".") == 0) {
+        return false;
+    }
+    DIR *dir = opendir(file);
+    if (dir != NULL) {
+        return true;
+    }
+
+    return false;
+}
+
+static run_list *collect_c_file(run_list *list_c, run_list *cur_dir) {
+    for(int i = 0; i < cur_dir->list_len; i++) {
+        char *file = list_get(cur_dir, i);
+        if (file_is_c(file)) {
+            list_add(list_c, file);
+        } if (file_is_dir(file)) {
+
+        }
+
+    }
+}
+
+
+run_list *scan_dir_tree() {
+    run_list *list_c = list_create();
+    char cur_dir[128];
+    getcwd(cur_dir, 128);
+    bool tree_dir = true;
+    
+
+    return list_c;
 }
