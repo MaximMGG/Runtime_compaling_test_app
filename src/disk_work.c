@@ -138,17 +138,21 @@ static run_list *collect_c_file(run_list *list_c, run_list *cur_dir, char *paren
     for(int i = 0; i < cur_dir->list_len; i++) {
         char *file = list_get(cur_dir, i);
         if (file_is_c(file)) {
-            char buf[128];
+            char *buf = (char *) malloc(sizeof(char) * 128);
+            memset(buf, 0, 128);
             strcat(buf, parent_dir_name);
             strcat(buf, "/");
             strcat(buf, file);
             list_add(list_c, buf);
+            free(buf);
         } if (file_is_dir(file)) {
-            char buf[128];
+            char *buf = (char *) malloc(sizeof(char) * 128);
+            memset(buf, 0, 128);
             strcat(buf, parent_dir_name);
             strcat(buf, "/");
             strcat(buf, file);
             collect_c_file(list_c, d_read_dir(file), buf);
+            free(buf);
         }
     }
     list_destroy(cur_dir);

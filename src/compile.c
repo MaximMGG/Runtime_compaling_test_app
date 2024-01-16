@@ -30,6 +30,7 @@ static int profile_option(C_setup *setup) {
 static void fust_execution() {
    run_list *list_c = scan_dir_tree(); 
    char buf[512];
+   memset(buf, 0, 512);
    for (int i = 0; i < list_c->list_len; i++) {
         strcat(buf, list_get(list_c, i));
         strcat(buf, " ");
@@ -38,6 +39,7 @@ static void fust_execution() {
    snprintf(e_buf, 556, GCC_, buf);
 
    system(e_buf);
+   exit(0);
 }
 
 C_setup *init_compiler(int argc, char **args) {
