@@ -116,7 +116,7 @@ run_list *d_read_dir(char *dir_name) {
 
 static bool file_is_c(char *file) {
     int len = strlen(file);
-    if ((*file + (len - 2)) == '.' && (*file + (len - 1)) == 'c') {
+    if (*(file + (len - 2)) == '.' && *(file + (len - 1)) == 'c') {
         return true;
     }
     return false;
@@ -140,19 +140,19 @@ static run_list *collect_c_file(run_list *list_c, run_list *cur_dir) {
         if (file_is_c(file)) {
             list_add(list_c, file);
         } if (file_is_dir(file)) {
-
+            collect_c_file(list_c, d_read_dir(file));
         }
-
     }
+    list_destroy(cur_dir);
+    return list_c;
 }
 
 
 run_list *scan_dir_tree() {
-    run_list *list_c = list_create();
     char cur_dir[128];
     getcwd(cur_dir, 128);
-    bool tree_dir = true;
-    
+
+    run_list *list_c = collect_c_file(list_create(), d_read_dir(cur_dir));
 
     return list_c;
 }

@@ -24,6 +24,21 @@ static int profile_option(C_setup *setup) {
     return 0;
 }
 
+#define GCC_ "gcc %s"
+#define GCC_G "gcc %s -g"
+
+static void fust_execution() {
+   run_list *list_c = scan_dir_tree(); 
+   char buf[512];
+   for (int i = 0; i < list_c->list_len; i++) {
+        strcat(buf, list_get(list_c, i));
+        strcat(buf, " ");
+   }
+   char e_buf[556];
+   snprintf(e_buf, 556, GCC_, buf);
+
+   system(e_buf);
+}
 
 C_setup *init_compiler(int argc, char **args) {
     C_setup *setup;
@@ -33,7 +48,6 @@ C_setup *init_compiler(int argc, char **args) {
     if (strcmp(args[1], "-pc") == 0) {
         puts("Ok, lets create profile");
         setup = profile_create();
-
     } else if (strcmp(args[1], "-p") == 0) {
         setup = profile_load(args[2]);
     } else if (strcmp(args[1], "-e") == 0) {
@@ -46,6 +60,8 @@ C_setup *init_compiler(int argc, char **args) {
             return NULL;
         }
         compile(setup);
+    } else if (strcmp(args[1], "-fe") == 0) {
+        fust_execution(); 
     } else {
         fprintf(stderr, "Unnown flag, pleare write [help] for more information");
         return NULL;
