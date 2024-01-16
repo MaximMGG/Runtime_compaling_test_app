@@ -134,13 +134,21 @@ static bool file_is_dir(char *file) {
     return false;
 }
 
-static run_list *collect_c_file(run_list *list_c, run_list *cur_dir) {
+static run_list *collect_c_file(run_list *list_c, run_list *cur_dir, char *parent_dir_name) {
     for(int i = 0; i < cur_dir->list_len; i++) {
         char *file = list_get(cur_dir, i);
         if (file_is_c(file)) {
-            list_add(list_c, file);
+            char buf[128];
+            strcat(buf, parent_dir_name);
+            strcat(buf, "/");
+            strcat(buf, file);
+            list_add(list_c, buf);
         } if (file_is_dir(file)) {
-            collect_c_file(list_c, d_read_dir(file));
+            char buf[128];
+            strcat(buf, parent_dir_name);
+            strcat(buf, "/");
+            strcat(buf, file);
+            collect_c_file(list_c, d_read_dir(file), buf);
         }
     }
     list_destroy(cur_dir);
@@ -152,7 +160,7 @@ run_list *scan_dir_tree() {
     char cur_dir[128];
     getcwd(cur_dir, 128);
 
-    run_list *list_c = collect_c_file(list_create(), d_read_dir(cur_dir));
+    run_list *list_c = collect_c_file(list_create(), d_read_dir(cur_dir), cur_dir);
 
     return list_c;
 }
