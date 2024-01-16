@@ -27,7 +27,7 @@ static int profile_option(C_setup *setup) {
 #define GCC_ "gcc %s"
 #define GCC_G "gcc %s -g"
 
-static void fust_execution() {
+static void fust_execution(bool g) {
    run_list *list_c = scan_dir_tree(); 
    char buf[512];
    memset(buf, 0, 512);
@@ -36,10 +36,12 @@ static void fust_execution() {
         strcat(buf, " ");
    }
    char e_buf[556];
-   snprintf(e_buf, 556, GCC_, buf);
+   if (g)
+       snprintf(e_buf, 556, GCC_G, buf);
+   else 
+       snprintf(e_buf, 556, GCC_, buf);
 
    system(e_buf);
-   exit(0);
 }
 
 C_setup *init_compiler(int argc, char **args) {
@@ -50,6 +52,10 @@ C_setup *init_compiler(int argc, char **args) {
     if (strcmp(args[1], "-pc") == 0) {
         puts("Ok, lets create profile");
         setup = profile_create();
+        char buf[64];
+        puts("Enter profile name");
+        fgets(buf, 64, stdin);
+        profile_save(setup, buf);
     } else if (strcmp(args[1], "-p") == 0) {
         setup = profile_load(args[2]);
     } else if (strcmp(args[1], "-e") == 0) {
@@ -63,7 +69,9 @@ C_setup *init_compiler(int argc, char **args) {
         }
         compile(setup);
     } else if (strcmp(args[1], "-fe") == 0) {
-        fust_execution(); 
+        fust_execution(false); 
+    } else if (strcmp(args[1], "-feg") == 0) {
+        fust_execution(true); 
     } else {
         fprintf(stderr, "Unnown flag, pleare write [help] for more information");
         return NULL;
