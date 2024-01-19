@@ -16,6 +16,7 @@ int setup_dir_and_conf() {
    snprintf(buf, 168, DIR_PATH, user_name);
    strcpy(path_to_dir, buf);
    snprintf(mkdirbuf, 128, fmt, buf);
+   system(mkdirbuf);
    strcpy(path_to_conf, mkdirbuf);
    strcat(buf, CONF_PATH);
 

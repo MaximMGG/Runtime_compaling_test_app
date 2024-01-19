@@ -46,6 +46,7 @@ static void fust_execution(bool g) {
 
 C_setup *init_compiler(int argc, char **args) {
     C_setup *setup;
+    setup_dir_and_conf();
     if (argc <= 1) {
         fprintf(stderr, "You din't enter any option\n Write option [help] for more information");
     }
@@ -55,6 +56,7 @@ C_setup *init_compiler(int argc, char **args) {
         char buf[64];
         puts("Enter profile name");
         fgets(buf, 64, stdin);
+        d_add_profile_to_conf(buf);
         profile_save(setup, buf);
     } else if (strcmp(args[1], "-p") == 0) {
         setup = profile_load(args[2]);
