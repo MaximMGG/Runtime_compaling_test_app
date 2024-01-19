@@ -43,6 +43,8 @@ char *str_remove_all(char *target, char symbol);
 //appent to end of string sourse part (need the sourse be allocated string)
 char *str_append(char *sourse, char *part);
     
+//trim the str delete last char if '\n' delete first and last chars if they not letter
+char *str_trim(char *str);
 
 // string func end -------------
 

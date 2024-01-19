@@ -17,8 +17,8 @@ int setup_dir_and_conf() {
    strcpy(path_to_dir, buf);
    snprintf(mkdirbuf, 128, fmt, buf);
    system(mkdirbuf);
-   strcpy(path_to_conf, mkdirbuf);
    strcat(buf, CONF_PATH);
+   strcpy(path_to_conf, buf);
 
    FILE *f = fopen(buf, "r");
    if (f == NULL) {

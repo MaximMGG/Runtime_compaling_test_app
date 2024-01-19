@@ -1,4 +1,5 @@
 #include "../headers/run_util.h"
+#include <stdbool.h>
 
 #define DEF_LIST_SIZE 10
 
@@ -156,5 +157,40 @@ char *str_append(char *sourse, char *part) {
     sourse[sourse_len] = '\0';
 
     return sourse;
+}
+
+static bool char_is_letter(char c) {
+    if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+        return true;
+    return false;
+
+}
+
+
+char *str_trim(char *str) {
+    int len = strlen(str);
+    char buf[len];
+    bool letter = false;
+
+    for (int i = 0, j = 0; i < len; i++) {
+        if (!letter) {
+            if (!char_is_letter(str[i])) {
+                continue;
+            }
+            letter = true;
+            buf[j++] = str[i];
+            continue;
+        }
+        if (str[i] == '\n') {
+            buf[j] = '\0';
+            break;
+        } else {
+            buf[j++] = str[i];
+        }
+    }
+    memset(str, 0, len);
+    strcpy(str, buf);
+
+    return str;
 }
 //string func end -------------

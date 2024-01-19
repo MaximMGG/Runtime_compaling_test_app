@@ -143,14 +143,14 @@ static void setup_c_version(C_setup *setup) {
 
 static void setup_debug(C_setup *setup) {
     puts("Enter 1 if you need to include (-g) debug option, or 0");
-    int debug;
-    scanf("%d", &debug);
-    if (debug > 1 || debug < 0) {
-        printf("Incorrect option %d try agane\n", debug);
+    char debug[10];
+    fgets(debug, 10, stdin);
+    if (debug[0] != '1' && debug[0] != '0') {
+        printf("Incorrect option %d try agane\n", *debug);
         setup_debug(setup);
         return;
     }
-    setup->debug = debug;
+    setup->debug = debug[0] == '1' ? 1 : 0;
 }
 
 
@@ -375,6 +375,7 @@ int profile_save(C_setup *setup, char *profile_name) {
         profile_save_helper(list, &deb, 1, "debug");
     }
 
+    profile_name = str_trim(profile_name);
     d_save_profile(list, profile_name);
 
     return 0;

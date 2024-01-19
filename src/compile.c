@@ -54,7 +54,7 @@ C_setup *init_compiler(int argc, char **args) {
         puts("Ok, lets create profile");
         setup = profile_create();
         char buf[64];
-        puts("Enter profile name");
+        printf("Enter profile name: ");
         fgets(buf, 64, stdin);
         d_add_profile_to_conf(buf);
         profile_save(setup, buf);
